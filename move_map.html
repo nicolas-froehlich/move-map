@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f95c269248338eadd3fc1360bcd6e952 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.control.css"/>
+</head>
+<body>
+    
+    
+<div style="position: fixed; top: 10px; left: 25%; transform: translateX(-50%); 
+     z-index: 9999; font-size: 24px; background-color: white; padding: 5px; border: 2px solid grey;">
+  <b>Who lived when where? 🏡 🗺️ </b>
+</div>
+    
+ <div style="
+ position: fixed;
+ bottom: 30px;
+ right: 30px;
+ width: 100px;
+ height: 165px;
+ background-color: white;
+ border:2px solid grey;
+ z-index:9999;
+ font-size:14px;
+ padding: 10px;">
+ <i style="color: black;">●</i> Everyone<br>
+ <i style="color: #1b9e77;">●</i> Anne<br>
+ <i style="color: #d95f02;">●</i> Amari<br>
+ <i style="color: #7570b3;">●</i> Bjørn<br>
+ <i style="color: #e7298a;">●</i> Layla<br>
+ <i style="color: #66a61e;">●</i> Diego<br>
+ <i style="color: #e6ab02;">●</i> Yi<br>
+ </div>
+ 
+    
+            <div class="folium-map" id="map_f95c269248338eadd3fc1360bcd6e952" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f95c269248338eadd3fc1360bcd6e952 = L.map(
+                "map_f95c269248338eadd3fc1360bcd6e952",
+                {
+                    center: [50.0, 10.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b597c9bbcafc069cdb4394788bcbe940 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_b597c9bbcafc069cdb4394788bcbe940.addTo(map_f95c269248338eadd3fc1360bcd6e952);
+        
+    
+            L.Control.TimeDimensionCustom = L.Control.TimeDimension.extend({
+                _getDisplayDateFormat: function(date){
+                    var newdate = new moment(date);
+                    console.log(newdate)
+                    return newdate.format("YYYY/MM");
+                }
+            });
+            map_f95c269248338eadd3fc1360bcd6e952.timeDimension = L.timeDimension(
+                {
+                    period: "P1M",
+                }
+            );
+            var timeDimensionControl = new L.Control.TimeDimensionCustom(
+                {"autoPlay": false, "loopButton": true, "maxSpeed": 2, "minSpeed": 0.1, "playerOptions": {"loop": true, "startOver": true, "transitionTime": 200}, "position": "bottomleft", "speedSlider": true, "timeSliderDragUpdate": true}
+            );
+            map_f95c269248338eadd3fc1360bcd6e952.addControl(this.timeDimensionControl);
+
+            var geoJsonLayer = L.geoJson({"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.1, 47.6]}, "properties": {"times": ["2018-10-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Konstanz</b><br><b>von:</b> October 2018<br><b>bis:</b> October 2018", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.1, 45.5]}, "properties": {"times": ["2020-02-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Milano</b><br><b>von:</b> February 2020<br><b>bis:</b> February 2020", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [10.5, 47.4]}, "properties": {"times": ["2020-06-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Austrian Alps</b><br><b>von:</b> June 2020<br><b>bis:</b> June 2020", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [17.7, 58.9]}, "properties": {"times": ["2021-06-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Stockholm</b><br><b>von:</b> June 2021<br><b>bis:</b> June 2021", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.7, 47.1]}, "properties": {"times": ["2022-06-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Austrian Alps</b><br><b>von:</b> June 2022<br><b>bis:</b> June 2022", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [16.4, 48.2]}, "properties": {"times": ["2023-06-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Vienna</b><br><b>von:</b> June 2023<br><b>bis:</b> June 2023", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [12.46, 47.38]}, "properties": {"times": ["2024-06-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Austrian Alps</b><br><b>von:</b> June 2024<br><b>bis:</b> June 2024", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [10.2, 55.1]}, "properties": {"times": ["2024-10-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Kiel</b><br><b>von:</b> October 2024<br><b>bis:</b> October 2024", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [8.5, 47.42]}, "properties": {"times": ["2024-12-01T00:00:00"], "popup": "<b>Everyone</b> in <b>Z\u00fcrich</b><br><b>von:</b> December 2024<br><b>bis:</b> December 2024", "icon": "circle", "iconstyle": {"fillColor": "black", "fillOpacity": 0.8, "stroke": true, "color": "black", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [13.4, 52.5]}, "properties": {"times": ["2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00"], "popup": "<b>Anne</b> in <b>Berlin</b><br><b>von:</b> October 2018<br><b>bis:</b> September 2020", "icon": "circle", "iconstyle": {"fillColor": "#1b9e77", "fillOpacity": 0.8, "stroke": true, "color": "#1b9e77", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [-9.1, 38.7]}, "properties": {"times": ["2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00"], "popup": "<b>Anne</b> in <b>Lissabon</b><br><b>von:</b> October 2020<br><b>bis:</b> December 2021", "icon": "circle", "iconstyle": {"fillColor": "#1b9e77", "fillOpacity": 0.8, "stroke": true, "color": "#1b9e77", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [13.4, 52.5]}, "properties": {"times": ["2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00"], "popup": "<b>Anne</b> in <b>Berlin</b><br><b>von:</b> January 2022<br><b>bis:</b> September 2023", "icon": "circle", "iconstyle": {"fillColor": "#1b9e77", "fillOpacity": 0.8, "stroke": true, "color": "#1b9e77", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [10.0, 53.5]}, "properties": {"times": ["2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00"], "popup": "<b>Anne</b> in <b>Hamburg</b><br><b>von:</b> October 2023<br><b>bis:</b> December 2024", "icon": "circle", "iconstyle": {"fillColor": "#1b9e77", "fillOpacity": 0.8, "stroke": true, "color": "#1b9e77", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [25.0, 60.2]}, "properties": {"times": ["2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00"], "popup": "<b>Anne</b> in <b>Helsinki</b><br><b>von:</b> January 2025<br><b>bis:</b> June 2025", "icon": "circle", "iconstyle": {"fillColor": "#1b9e77", "fillOpacity": 0.8, "stroke": true, "color": "#1b9e77", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [1.4, 43.6]}, "properties": {"times": ["2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00"], "popup": "<b>Amari</b> in <b>Tolouse</b><br><b>von:</b> October 2018<br><b>bis:</b> August 2021", "icon": "circle", "iconstyle": {"fillColor": "#d95f02", "fillOpacity": 0.8, "stroke": true, "color": "#d95f02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [7.0, 50.7]}, "properties": {"times": ["2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00"], "popup": "<b>Amari</b> in <b>Bonn</b><br><b>von:</b> September 2021<br><b>bis:</b> February 2022", "icon": "circle", "iconstyle": {"fillColor": "#d95f02", "fillOpacity": 0.8, "stroke": true, "color": "#d95f02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.1, 47.6]}, "properties": {"times": ["2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00"], "popup": "<b>Amari</b> in <b>Konstanz</b><br><b>von:</b> March 2022<br><b>bis:</b> July 2022", "icon": "circle", "iconstyle": {"fillColor": "#d95f02", "fillOpacity": 0.8, "stroke": true, "color": "#d95f02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [10.2, 36.7]}, "properties": {"times": ["2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00"], "popup": "<b>Amari</b> in <b>Tunis</b><br><b>von:</b> August 2022<br><b>bis:</b> August 2023", "icon": "circle", "iconstyle": {"fillColor": "#d95f02", "fillOpacity": 0.8, "stroke": true, "color": "#d95f02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [8.5, 47.4]}, "properties": {"times": ["2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00"], "popup": "<b>Amari</b> in <b>Z\u00fcrich</b><br><b>von:</b> September 2023<br><b>bis:</b> June 2025", "icon": "circle", "iconstyle": {"fillColor": "#d95f02", "fillOpacity": 0.8, "stroke": true, "color": "#d95f02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [11.4, 3.8]}, "properties": {"times": ["2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Yaounde</b><br><b>von:</b> October 2018<br><b>bis:</b> November 2020", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [13.41, 52.51]}, "properties": {"times": ["2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Berlin</b><br><b>von:</b> December 2020<br><b>bis:</b> February 2021", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [-14.0, 28.4]}, "properties": {"times": ["2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Fuerteventura</b><br><b>von:</b> April 2021<br><b>bis:</b> July 2021", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.18, 47.6]}, "properties": {"times": ["2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Konstanz</b><br><b>von:</b> August 2021<br><b>bis:</b> February 2022", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [-70.7, -33.5]}, "properties": {"times": ["2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Santiago de Chile</b><br><b>von:</b> March 2022<br><b>bis:</b> August 2022", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [-77.0, -12.0]}, "properties": {"times": ["2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Lima</b><br><b>von:</b> September 2022<br><b>bis:</b> September 2023", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [14.3, 48.3]}, "properties": {"times": ["2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Linz</b><br><b>von:</b> October 2023<br><b>bis:</b> January 2024", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [-122.0, 37.7]}, "properties": {"times": ["2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>San Franciso</b><br><b>von:</b> February 2024<br><b>bis:</b> January 2025", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [7.6, 47.52]}, "properties": {"times": ["2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00"], "popup": "<b>Bj\u00f8rn</b> in <b>Basel</b><br><b>von:</b> February 2025<br><b>bis:</b> June 2025", "icon": "circle", "iconstyle": {"fillColor": "#7570b3", "fillOpacity": 0.8, "stroke": true, "color": "#7570b3", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [-1.6, 48.1]}, "properties": {"times": ["2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00"], "popup": "<b>Layla</b> in <b>Rennes</b><br><b>von:</b> October 2018<br><b>bis:</b> August 2020", "icon": "circle", "iconstyle": {"fillColor": "#e7298a", "fillOpacity": 0.8, "stroke": true, "color": "#e7298a", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [13.41, 52.51]}, "properties": {"times": ["2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00"], "popup": "<b>Layla</b> in <b>Berlin</b><br><b>von:</b> September 2020<br><b>bis:</b> March 2022", "icon": "circle", "iconstyle": {"fillColor": "#e7298a", "fillOpacity": 0.8, "stroke": true, "color": "#e7298a", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [12.0, 57.7]}, "properties": {"times": ["2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00"], "popup": "<b>Layla</b> in <b>G\u00f6teborg</b><br><b>von:</b> April 2022<br><b>bis:</b> September 2024", "icon": "circle", "iconstyle": {"fillColor": "#e7298a", "fillOpacity": 0.8, "stroke": true, "color": "#e7298a", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [121.5, 31.2]}, "properties": {"times": ["2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00"], "popup": "<b>Layla</b> in <b>Shanghai</b><br><b>von:</b> October 2024<br><b>bis:</b> June 2025", "icon": "circle", "iconstyle": {"fillColor": "#e7298a", "fillOpacity": 0.8, "stroke": true, "color": "#e7298a", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.17, 47.6]}, "properties": {"times": ["2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00"], "popup": "<b>Diego</b> in <b>Konstanz</b><br><b>von:</b> October 2018<br><b>bis:</b> September 2019", "icon": "circle", "iconstyle": {"fillColor": "#66a61e", "fillOpacity": 0.8, "stroke": true, "color": "#66a61e", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [20.2, 63.8]}, "properties": {"times": ["2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00", "2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00"], "popup": "<b>Diego</b> in <b>Ume\u00e5</b><br><b>von:</b> October 2019<br><b>bis:</b> June 2021", "icon": "circle", "iconstyle": {"fillColor": "#66a61e", "fillOpacity": 0.8, "stroke": true, "color": "#66a61e", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [11.0, 49.3]}, "properties": {"times": ["2021-07-01T00:00:00", "2021-08-01T00:00:00", "2021-09-01T00:00:00"], "popup": "<b>Diego</b> in <b>Nuremberg</b><br><b>von:</b> July 2021<br><b>bis:</b> September 2021", "icon": "circle", "iconstyle": {"fillColor": "#66a61e", "fillOpacity": 0.8, "stroke": true, "color": "#66a61e", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [69.1, 34.4]}, "properties": {"times": ["2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00", "2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00", "2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00"], "popup": "<b>Diego</b> in <b>Kabul</b><br><b>von:</b> October 2021<br><b>bis:</b> December 2024", "icon": "circle", "iconstyle": {"fillColor": "#66a61e", "fillOpacity": 0.8, "stroke": true, "color": "#66a61e", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [8.4, 49.5]}, "properties": {"times": ["2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00"], "popup": "<b>Diego</b> in <b>Ludwigshafen</b><br><b>von:</b> January 2025<br><b>bis:</b> June 2025", "icon": "circle", "iconstyle": {"fillColor": "#66a61e", "fillOpacity": 0.8, "stroke": true, "color": "#66a61e", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [31.27, 30.0]}, "properties": {"times": ["2018-10-01T00:00:00", "2018-11-01T00:00:00", "2018-12-01T00:00:00", "2019-01-01T00:00:00", "2019-02-01T00:00:00", "2019-03-01T00:00:00", "2019-04-01T00:00:00", "2019-05-01T00:00:00", "2019-06-01T00:00:00", "2019-07-01T00:00:00", "2019-08-01T00:00:00", "2019-09-01T00:00:00", "2019-10-01T00:00:00", "2019-11-01T00:00:00", "2019-12-01T00:00:00", "2020-01-01T00:00:00", "2020-02-01T00:00:00", "2020-03-01T00:00:00", "2020-04-01T00:00:00", "2020-05-01T00:00:00", "2020-06-01T00:00:00", "2020-07-01T00:00:00", "2020-08-01T00:00:00"], "popup": "<b>Yi</b> in <b>Cairo</b><br><b>von:</b> October 2018<br><b>bis:</b> August 2020", "icon": "circle", "iconstyle": {"fillColor": "#e6ab02", "fillOpacity": 0.8, "stroke": true, "color": "#e6ab02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [8.0, 58.1]}, "properties": {"times": ["2020-09-01T00:00:00", "2020-10-01T00:00:00", "2020-11-01T00:00:00", "2020-12-01T00:00:00", "2021-01-01T00:00:00", "2021-02-01T00:00:00", "2021-03-01T00:00:00", "2021-04-01T00:00:00", "2021-05-01T00:00:00", "2021-06-01T00:00:00", "2021-07-01T00:00:00"], "popup": "<b>Yi</b> in <b>Kristiansand</b><br><b>von:</b> September 2020<br><b>bis:</b> July 2021", "icon": "circle", "iconstyle": {"fillColor": "#e6ab02", "fillOpacity": 0.8, "stroke": true, "color": "#e6ab02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [13.4, 52.5]}, "properties": {"times": ["2021-08-01T00:00:00", "2021-09-01T00:00:00", "2021-10-01T00:00:00", "2021-11-01T00:00:00", "2021-12-01T00:00:00", "2022-01-01T00:00:00", "2022-02-01T00:00:00", "2022-03-01T00:00:00", "2022-04-01T00:00:00", "2022-05-01T00:00:00", "2022-06-01T00:00:00", "2022-07-01T00:00:00", "2022-08-01T00:00:00", "2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00"], "popup": "<b>Yi</b> in <b>Berlin</b><br><b>von:</b> August 2021<br><b>bis:</b> December 2022", "icon": "circle", "iconstyle": {"fillColor": "#e6ab02", "fillOpacity": 0.8, "stroke": true, "color": "#e6ab02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [9.1, 47.7]}, "properties": {"times": ["2023-01-01T00:00:00", "2023-02-01T00:00:00", "2023-03-01T00:00:00", "2023-04-01T00:00:00", "2023-05-01T00:00:00", "2023-06-01T00:00:00", "2023-07-01T00:00:00", "2023-08-01T00:00:00", "2023-09-01T00:00:00", "2023-10-01T00:00:00", "2023-11-01T00:00:00", "2023-12-01T00:00:00", "2024-01-01T00:00:00", "2024-02-01T00:00:00", "2024-03-01T00:00:00", "2024-04-01T00:00:00", "2024-05-01T00:00:00", "2024-06-01T00:00:00"], "popup": "<b>Yi</b> in <b>Konstanz</b><br><b>von:</b> January 2023<br><b>bis:</b> June 2024", "icon": "circle", "iconstyle": {"fillColor": "#e6ab02", "fillOpacity": 0.8, "stroke": true, "color": "#e6ab02", "radius": 11}}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [10.4, 63.4]}, "properties": {"times": ["2024-07-01T00:00:00", "2024-08-01T00:00:00", "2024-09-01T00:00:00", "2024-10-01T00:00:00", "2024-11-01T00:00:00", "2024-12-01T00:00:00", "2025-01-01T00:00:00", "2025-02-01T00:00:00", "2025-03-01T00:00:00", "2025-04-01T00:00:00", "2025-05-01T00:00:00", "2025-06-01T00:00:00"], "popup": "<b>Yi</b> in <b>Trondheim</b><br><b>von:</b> July 2024<br><b>bis:</b> June 2025", "icon": "circle", "iconstyle": {"fillColor": "#e6ab02", "fillOpacity": 0.8, "stroke": true, "color": "#e6ab02", "radius": 11}}}]}, {
+                    pointToLayer: function (feature, latLng) {
+                        if (feature.properties.icon == 'marker') {
+                            if(feature.properties.iconstyle){
+                                return new L.Marker(latLng, {
+                                    icon: L.icon(feature.properties.iconstyle)});
+                            }
+                            //else
+                            return new L.Marker(latLng);
+                        }
+                        if (feature.properties.icon == 'circle') {
+                            if (feature.properties.iconstyle) {
+                                return new L.circleMarker(latLng, feature.properties.iconstyle)
+                                };
+                            //else
+                            return new L.circleMarker(latLng);
+                        }
+                        //else
+
+                        return new L.Marker(latLng);
+                    },
+                    style: function (feature) {
+                        return feature.properties.style;
+                    },
+                    onEachFeature: function(feature, layer) {
+                        if (feature.properties.popup) {
+                        layer.bindPopup(feature.properties.popup);
+                        }
+                        if (feature.properties.tooltip) {
+                        layer.bindTooltip(feature.properties.tooltip);
+                        }
+                    }
+                })
+
+            var timestamped_geo_json_33eaaf5734f0c4a9ca9c8b3058ccf1ae = L.timeDimension.layer.geoJson(
+                geoJsonLayer,
+                {
+                    updateTimeDimension: true,
+                    addlastPoint: false,
+                    duration: "P1M",
+                }
+            ).addTo(map_f95c269248338eadd3fc1360bcd6e952);
+        
+    
+            var layer_control_9eff929f9597a369950b6e249af1b94d_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_b597c9bbcafc069cdb4394788bcbe940,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_9eff929f9597a369950b6e249af1b94d = L.control.layers(
+                layer_control_9eff929f9597a369950b6e249af1b94d_layers.base_layers,
+                layer_control_9eff929f9597a369950b6e249af1b94d_layers.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_f95c269248338eadd3fc1360bcd6e952);
+
+        
+    
+            tile_layer_b597c9bbcafc069cdb4394788bcbe940.addTo(map_f95c269248338eadd3fc1360bcd6e952);
+        
+</script>
+</html>
